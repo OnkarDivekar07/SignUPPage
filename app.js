@@ -14,17 +14,19 @@ app.use(express.json());
 app.use(cors());
 app.use(cookie());
 
+//static serving of Files
+app.use(express.static("view"));
+
 //Importing Routes
 const SignUPRoute = require("./Routes/User");
+const HomePage = require("./Routes/HomePage");
 
 //Importing models
 const User = require("./Model/User");
 
 //Routes Handling MiddleWre
 app.use("/User", SignUPRoute);
-app.use((req, res) => {
-  res.send("<h1>Hello World<h1>");
-});
+app.use(HomePage);
 
 //starting my server
 sequalize
