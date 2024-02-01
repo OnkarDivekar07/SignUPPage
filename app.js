@@ -15,7 +15,7 @@ app.use(cors());
 app.use(cookie());
 
 //static serving of Files
-app.use(express.static("view"));
+app.use(express.static("Public"));
 
 //Importing Routes
 const SignUPRoute = require("./Routes/User");

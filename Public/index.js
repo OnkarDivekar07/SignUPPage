@@ -1,1 +1,2 @@
-const form = document.getElementById("");
+const form = document.getElementById("SignUpForm");
+console.log(form);
