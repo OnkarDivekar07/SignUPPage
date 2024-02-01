@@ -8,6 +8,7 @@ const sequalize = new Sequalize(
   {
     dialect: "mysql",
     host: process.env.HOST,
+    logging: false,
   }
 );
 
