@@ -2,6 +2,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const cookie = require("cookie-parser");
 const sequalize = require("./util/database");
 const PORT = process.env.PORT || 2545;
 
@@ -11,6 +12,7 @@ const app = express();
 //Middlewares
 app.use(express.json());
 app.use(cors());
+app.use(cookie());
 
 //Importing Routes
 const SignUPRoute = require("./Routes/User");

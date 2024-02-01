@@ -1,11 +1,13 @@
 const User = require("../Model/User");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const secreateKey = process.env.secreateKey;
+console.log(secreateKey);
 
 exports.SignUP = async (req, res) => {
   try {
     console.log(req.body);
     const { FirstName, LastName, Email, Password } = req.body;
-    console.log(Password);
     const user = await User.findOne({ where: { Email } });
     if (user) {
       return res.status(409).json({ message: "Account Already Exists" });
@@ -16,6 +18,11 @@ exports.SignUP = async (req, res) => {
         LastName: LastName,
         Email: Email,
         Password: hashPassword,
+      });
+      console.log(secreateKey);
+      const token = jwt.sign({ UserId: newuser.id }, secreateKey);
+      res.cookie(token, {
+        expiresIn: 3600000,
       });
       res.status(201).json({ Message: "User Account Created Sucessfully" });
     }
