@@ -1,6 +1,7 @@
 //imports
 require("dotenv").config();
 const express = require("express");
+const sequalize = require("./util/database");
 const PORT = process.env.PORT || 2545;
 
 //handler function
@@ -13,6 +14,13 @@ app.use((req, res) => {
 
 //starting my server
 
-app.listen(2545, () => {
-  console.log(`server Started On PORT ${PORT}`);
-});
+sequalize
+  .sync({})
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`server Started On PORT ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
