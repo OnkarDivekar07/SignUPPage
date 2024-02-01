@@ -8,5 +8,6 @@ form.addEventListener("submit", submitSignUpForm);
 
 async function submitSignUpForm(event) {
   event.preventDefault();
-  const FirstNameinput = FirstName.Value;
+  const FirstNameinput = FirstName.value;
+  console.log(FirstNameinput);
 }
