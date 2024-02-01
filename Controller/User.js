@@ -2,11 +2,9 @@ const User = require("../Model/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const secreateKey = process.env.secreateKey;
-console.log(secreateKey);
 
 exports.SignUP = async (req, res) => {
   try {
-    console.log(req.body);
     const { FirstName, LastName, Email, Password } = req.body;
     const user = await User.findOne({ where: { Email } });
     if (user) {
@@ -25,6 +23,32 @@ exports.SignUP = async (req, res) => {
         expiresIn: 3600000,
       });
       res.status(201).json({ Message: "User Account Created Sucessfully" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ Message: "Internal server Error" });
+  }
+};
+
+exports.Login = async (req, res) => {
+  try {
+    const { Email, Password } = req.body;
+    const user = await User.findOne({ where: { Email } });
+
+    if (!user) {
+      return res.status(404).json({ message: "User Does Not Exists" });
+    } else {
+      const validPassword = await bcrypt.compare(Password, user.Password);
+      console.log(validPassword);
+      if (validPassword) {
+        const token = jwt.sign({ UserId: user.id }, secreateKey);
+        res.cookie(token, {
+          expiresIn: 3600000,
+        });
+        res.status(200).json({ message: "login Sucessful" });
+      } else {
+        res.status(404).json({ message: "Email or Password is Wrong" });
+      }
     }
   } catch (error) {
     console.log(error);
