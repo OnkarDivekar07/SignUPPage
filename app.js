@@ -1,18 +1,27 @@
 //imports
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const sequalize = require("./util/database");
 const PORT = process.env.PORT || 2545;
 
-//handler function
+//Handler function
 const app = express();
 
-//importing models
+//Middlewares
+app.use(express.json());
+app.use(cors());
+
+//Importing Routes
+const SignUPRoute = require("./Routes/User");
+
+//Importing models
 const User = require("./Model/User");
 
-//routes
+//Routes Handling MiddleWre
+app.use("/User", SignUPRoute);
 app.use((req, res) => {
-  res.send("<h1>Welcome To Onkars Server<h1>");
+  res.send("<h1>Hello World<h1>");
 });
 
 //starting my server

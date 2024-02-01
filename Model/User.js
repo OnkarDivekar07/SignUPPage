@@ -21,7 +21,7 @@ const User = sequalize.define("User", {
     allowNull: false,
   },
   Password: {
-    type: Sequalize.TEXT,
+    type: Sequalize.TEXT(),
     allowNull: false,
   },
 });
